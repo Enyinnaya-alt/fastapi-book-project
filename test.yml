@@ -1,0 +1,32 @@
+name: CI Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest  # You can also change this to your preferred OS
+
+    steps:
+    # Checkout the code from GitHub
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'  # You can specify the version you are using (e.g., '3.9')
+
+    # Install dependencies from requirements.txt
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Run tests using pytest
+    - name: Run tests
+      run: |
+        pytest

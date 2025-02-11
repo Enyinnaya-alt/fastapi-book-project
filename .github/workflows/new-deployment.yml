@@ -1,0 +1,48 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Python environment
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.9'
+
+    # Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    # Run tests
+    - name: Run tests
+      run: |
+        pytest
+
+    # Set up SSH for deployment
+    - name: Set up SSH keys
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    # Deploy to your EC2 instance (replace with your specific commands)
+    - name: Deploy to EC2 instance
+      run: |
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-13-60-205-28.eu-north-1.compute.amazonaws.com << 'EOF'
+          cd /path/to/your/project
+          git pull origin main
+          # Restart or deploy your application (e.g., using Docker or Gunicorn)
+          sudo systemctl restart fastapi.service
+        EOF
