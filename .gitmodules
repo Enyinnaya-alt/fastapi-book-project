@@ -1,0 +1,3 @@
+[submodule "fastapi-book-project"]
+    path = fastapi-book-project
+    url = https://github.com/Enyinnaya-alt/fastapi-book-project.git
