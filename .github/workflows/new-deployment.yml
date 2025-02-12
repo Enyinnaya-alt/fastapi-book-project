@@ -19,9 +19,9 @@ jobs:
     - name: Set up SSH keys
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         HOST_NAME: ${{ secrets.HOST_NAME }}
-          USER_NAME: ${{ secrets.USER_NAME }}}
+        USER_NAME: ${{ secrets.USER_NAME }}
 
     # Deploy to your EC2 instance (replace with your specific commands)
     - name: Deploy to EC2 instance
