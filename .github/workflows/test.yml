@@ -1,37 +1,31 @@
-name: Test FastAPI Project
+name: CI Pipeline
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
+    branches: [ main ]
 
+    
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Check out repository code
+      uses: actions/checkout@v3
 
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.13.1'
 
-      - name: Verify Python installation
-        run: |
-          python3 --version  # Verify Python 3.12 is installed
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
 
-      - name: Install dependencies
-        run: |
-          python -m venv myenv
-          source myenv/bin/activate
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip freeze  # Debugging step to show installed packages
-
-      # Step 4: Run tests
-      - name: Run pytest
-        run: |
-          source myenv/bin/activate
-          pytest --maxfail=5 --disable-warnings -v
+    - name: Run tests
+      run: |
+        source venv/bin/activate
+        pytest -v
