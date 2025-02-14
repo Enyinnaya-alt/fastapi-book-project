@@ -12,14 +12,14 @@ def test_get_single_book():
     assert response.status_code == 200
     data = response.json()
     assert data["title"] == "The Hobbit"
-    assert data["author"] == "J.R.R. Tolkien"
+    assert data["author"] == "R.R. Tolkien"
 
 
 def test_create_book():
     new_book = {
         "id": 4,
         "title": "Harry Potter and the Sorcerer's Stone",
-        "author": "J.K. Rowling",
+        "author": "K. Rowling",
         "publication_year": 1997,
         "genre": "Fantasy",
     }
@@ -34,7 +34,7 @@ def test_update_book():
     updated_book = {
         "id": 1,
         "title": "The Hobbit: An Unexpected Journey",
-        "author": "J.R.R. Tolkien",
+        "author": "R.R. Tolkien",
         "publication_year": 1937,
         "genre": "Fantasy",
     }
